@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import "ElaAdmin/assets/css/style.css"
-import logooo from "ElaAdmin/images/logo.png"
+import logooo from "ElaAdmin/images/logo2.png"
 
 
 function Login() {
@@ -92,32 +92,32 @@ function Login() {
           <div class="login-content">
             <div class="login-logo">
               <a href="index.html">
-                <img class="align-content" src={logooo} alt="" />
+              <img className='align-content' src="https://see.fontimg.com/api/renderfont4/EalOz/eyJyIjoiZnMiLCJoIjo3NCwidyI6MTUwMCwiZnMiOjQ5LCJmZ2MiOiIjMzA5OEY1IiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/REVMSUNSQVZF/rustic-shine.png" alt="Pretty fonts" />
               </a>
             </div>
             <div class="login-form">
               <form onSubmit={formSubmit}>
                 <div class="form-group">
-                  <label>Email address</label>
-                  <input type="email" class="form-control" ref={refe} placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                  <label>Username</label>
+                  <input type="text" class="form-control" ref={refe} placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                 </div>
                 <div class="form-group">
                   <label>Password</label>
                   <input type="password" class="form-control" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
                 </div>
                 <div class="checkbox">
-                  <label>
+                  {/* <label>
                     <input type="checkbox" /> Remember Me
                   </label>
                   <label class="pull-right">
                     <a href="#">Forgotten Password?</a>
-                  </label>
+                  </label> */}
                 </div>
-                <button style={{backgroundColor: "#f360b3"}} type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" disabled={btnDisabled}>Sign in</button>
+                <button style={{backgroundColor: "#3098f5"}} type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" disabled={btnDisabled}>Sign in</button>
 
-                <div class="register-link m-t-15 text-center">
+                {/* <div class="register-link m-t-15 text-center">
                   <p>Don't have account ? <a href="#"> Sign Up Here</a></p>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>

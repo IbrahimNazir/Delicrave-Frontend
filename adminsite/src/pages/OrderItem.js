@@ -36,7 +36,7 @@ function OrderItem() {
                                     <div className='row py-2'>
                                         <div class="col-lg-6 row">
                                             <div class="col-lg-5">
-                                            <strong>Customer Name:</strong>
+                                                <strong>Customer Name:</strong>
                                             </div>
                                             <div class="col-lg-7">
                                                 Ibrahim Nazir
@@ -44,7 +44,7 @@ function OrderItem() {
                                         </div>
                                         <div class="col-lg-6 row">
                                             <div class="col-lg-5">
-                                                
+
                                                 <strong>Contact #:</strong>
 
                                             </div>
@@ -58,7 +58,7 @@ function OrderItem() {
                                         <div class="col-lg-6 row">
                                             <div class="col-lg-5">
                                                 <strong>Shipping Address:</strong>
-                                                
+
                                             </div>
                                             <div class="col-lg-7">
                                                 A-16, Sec 9, Block C, Nazimabad
@@ -67,7 +67,7 @@ function OrderItem() {
                                         <div class="col-lg-6 row">
                                             <div class="col-lg-5">
                                                 <strong>Payment Method:</strong>
-                                                
+
                                             </div>
                                             <div class="col-lg-7">
                                                 Card

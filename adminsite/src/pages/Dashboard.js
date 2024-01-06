@@ -17,8 +17,8 @@ function Dashboard() {
                                         </div>
                                         <div class="stat-content">
                                             <div class="text-left dib">
-                                                <div class="stat-text">$<span class="count">23569</span></div>
-                                                <div class="stat-heading">Revenue</div>
+                                                <div class="stat-text"><span class="count">23569</span></div>
+                                                <div class="stat-heading">Sale</div>
                                             </div>
                                         </div>
                                     </div>
@@ -35,7 +35,7 @@ function Dashboard() {
                                         <div class="stat-content">
                                             <div class="text-left dib">
                                                 <div class="stat-text"><span class="count">3435</span></div>
-                                                <div class="stat-heading">Sales</div>
+                                                <div class="stat-heading">Orders</div>
                                             </div>
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@ function Dashboard() {
                                         <div class="stat-content">
                                             <div class="text-left dib">
                                                 <div class="stat-text"><span class="count">349</span></div>
-                                                <div class="stat-heading">Templates</div>
+                                                <div class="stat-heading">Desserts</div>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@ function Dashboard() {
                                         <div class="stat-content">
                                             <div class="text-left dib">
                                                 <div class="stat-text"><span class="count">2986</span></div>
-                                                <div class="stat-heading">Clients</div>
+                                                <div class="stat-heading">Events</div>
                                             </div>
                                         </div>
                                     </div>

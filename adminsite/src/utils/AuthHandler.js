@@ -1,14 +1,14 @@
 import axios from "axios";
+import Config from "./Config";
 // import reactLocalStorage from 'reactjs-localstorage'
 // import Config from './Config.js'
 
 class AuthHandler {
-    static login(email, password, callback) {
-        axios.post("https//google.com", { email: email, password: password })
+    static login(username, password, callback) {
+        axios.post(Config.loginUrl, { username: username, password: password })
             .then((response) => {
                 if (response.status === 200) {
-                    window.localStorage.setItem('token', response.data.access)
-                    window.localStorage.setItem('refresh', response.data.access)
+                    window.localStorage.setItem('token', response.data['token'])
                     callback({ error: false, message: "Login Successful" })
                 }
             })
@@ -18,7 +18,7 @@ class AuthHandler {
     }
 
     static loggedIn() {
-        if (window.localStorage.getItem("token") && window.localStorage.getItem("refresh")) {
+        if (window.localStorage.getItem("token")) {
             return true;
         }
         else {
@@ -30,13 +30,8 @@ class AuthHandler {
         return localStorage.getItem("token")
     }
 
-    static getRefreshToken() {
-        return localStorage.getItem("refresh")
-    }
-
     static logoutUser() {
         window.localStorage.removeItem("token")
-        window.localStorage.removeItem("refresh")
     }
     static checkTokenExpiry() {
         var token = this.getLoginToken()
