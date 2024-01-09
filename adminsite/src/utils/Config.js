@@ -5,6 +5,7 @@ class Config{
     static dessertsUrl = "http://127.0.0.1:8000/delicrave/desserts/"
     static unitsUrl = "http://127.0.0.1:8000/delicrave/units/"
     static ordersUrl = "http://127.0.0.1:8000/delicrave/orders/"
+    static orderItemsUrl = "http://127.0.0.1:8000/delicrave/itemsbyorderid/"
     static flavorcatsUrl = "http://127.0.0.1:8000/delicrave/flavorcats/"
     static wishlistsUrl = "http://127.0.0.1:8000/delicrave/wishlists/"
     static catalogitemsUrl = "http://127.0.0.1:8000/delicrave/catalogitems/"

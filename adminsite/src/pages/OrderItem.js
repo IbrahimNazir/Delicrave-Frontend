@@ -1,8 +1,89 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { apiEditOrders, apiGetAllOrderItems } from '../utils/ApiHandler';
+import { Redirect, useParams } from 'react-router-dom/cjs/react-router-dom';
+import Error404 from './Error404';
 
 function OrderItem() {
+
+    const { orderId } = useParams();
+    const [status, setStatus] = useState("1")
+    const [orderItems, setorderItems] = useState([{
+        "id": 1,
+        "dessert": {
+            "id": 2,
+            "name": "Chocobar",
+            "price": 50.0,
+            "stockquantity": 100,
+            "description": "Sweet",
+            "category": {
+                "id": 2,
+                "name": "Ice Cream"
+            },
+            "flavor": {
+                "id": 2,
+                "name": "Chocolate"
+            },
+            "unit": "pcs"
+        },
+        "order": {
+            "id": 1,
+            "date": "2024-01-06",
+            "status": "Pending",
+            "totalamount": 500.0,
+            "paymethod": "COD",
+            "rating": 5,
+            "review": "Best",
+            "customer": {
+                "id": 1,
+                "username": "Ibrahim",
+                "name": "Ibrahim Nazir",
+                "contact": "030020067",
+                "email": "ibrahim@gmail.com",
+                "address": "A-55, Sector 5"
+            }
+        },
+        "quantity": 2
+    }])
+    const statuss = { "Pending": "1", "Confirmed": "2", "On The Way": "3", "Delivered": "4", "Cancel": "5" }
+    const statusz = { "1": "Pending", "2": "Confirmed", "3": "On The Way", "4": "Delivered", "5": "Cancel" }
+    const fetchOrderDetailsAsync = async () => {
+        try {
+            console.log("param:", orderId)
+            const result = await apiGetAllOrderItems(orderId);
+            console.log('respo', result.length)
+
+            setorderItems(result)
+            setStatus(statuss[orderItems[0].order.status])
+        } catch (error) {
+            console.log(error)
+        }
+    };
+    useEffect(() => {
+        fetchOrderDetailsAsync()
+    }
+        , [orderId])
+
+    useEffect(() => {
+        // ('id', 'date', 'status', 'totalamount','paymethod', 'rating', 'review', 'customer')
+        // console.log(orderId, orderItems[0].order.date, status, orderItems[0].order.totalamount, orderItems[0].order.paymethod, orderItems[0].order.rating, orderItems.order.review, orderItems.order.customer)
+        console.log(orderId, orderItems[0].order.date, statusz[status], orderItems[0].order.totalamount, orderItems[0].order.paymethod, orderItems[0].order.rating, orderItems[0].order.review, orderItems[0].order.customer.id)
+        apiEditOrders(orderId, orderItems[0].order.date, statusz[status], orderItems[0].order.totalamount, orderItems[0].order.paymethod, orderItems[0].order.rating, orderItems[0].order.review, orderItems[0].order.customer.id)
+        console.log("i havebeen called")
+    }, [status])
+    
+    
+    const totalCalculator = (deliveryCharges) => {
+        let total = 0
+        for (const order of orderItems) {
+            total += order.dessert.price * order.quantity
+        }
+        return total + deliveryCharges
+    } 
+
+
+
     return (
-        <>
+        (orderItems.length == 0) ? (<Redirect to="/" />) : (<>
             <div class="content">
                 <div class="animated fadeIn">
 
@@ -21,7 +102,7 @@ function OrderItem() {
                                                 <strong>Order ID:</strong>
                                             </div>
                                             <div class="col-lg-7">
-                                                2423424
+                                                {orderItems[0].order.id}
                                             </div>
                                         </div>
                                         <div class="col-lg-6 row">
@@ -29,7 +110,7 @@ function OrderItem() {
                                                 <strong>Order Date:</strong>
                                             </div>
                                             <div class="col-lg-7">
-                                                12-02-2023
+                                                {orderItems[0].order.date}
                                             </div>
                                         </div>
                                     </div>
@@ -39,7 +120,7 @@ function OrderItem() {
                                                 <strong>Customer Name:</strong>
                                             </div>
                                             <div class="col-lg-7">
-                                                Ibrahim Nazir
+                                                {orderItems[0].order.customer.name}
                                             </div>
                                         </div>
                                         <div class="col-lg-6 row">
@@ -49,7 +130,7 @@ function OrderItem() {
 
                                             </div>
                                             <div class="col-lg-7">
-                                                03057382341
+                                                {orderItems[0].order.customer.contact}
                                             </div>
                                         </div>
 
@@ -61,7 +142,7 @@ function OrderItem() {
 
                                             </div>
                                             <div class="col-lg-7">
-                                                A-16, Sec 9, Block C, Nazimabad
+                                                {orderItems[0].order.customer.address}
                                             </div>
                                         </div>
                                         <div class="col-lg-6 row">
@@ -70,7 +151,7 @@ function OrderItem() {
 
                                             </div>
                                             <div class="col-lg-7">
-                                                Card
+                                                {orderItems[0].order.paymethod}
                                             </div>
                                         </div>
 
@@ -91,36 +172,18 @@ function OrderItem() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Gingerbread Loaf</td>
-                                                <td>Vanilla</td>
-                                                <td>Cake</td>
-                                                <td>1 pond</td>
-                                                <td>950</td>
-                                                <td>2</td>
-                                                <td>1900</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Gingerbread Loaf</td>
-                                                <td>Vanilla</td>
-                                                <td>Cake</td>
-                                                <td>1 pond</td>
-                                                <td>950</td>
-                                                <td>2</td>
-                                                <td>1900</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Chocolate chip Ice Cream</td>
-                                                <td>Chocolate</td>
-                                                <td>Ice Cream</td>
-                                                <td>Cup</td>
-                                                <td>350</td>
-                                                <td>1</td>
-                                                <td>350</td>
-                                            </tr>
+                                            {orderItems.map((orderItem, index) => (
+                                                <tr key={index}>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>{orderItem.dessert.name}</td>
+                                                    <td>{orderItem.dessert.flavor.name}</td>
+                                                    <td>{orderItem.dessert.category.name}</td>
+                                                    <td>{orderItem.dessert.unit}</td>
+                                                    <td>{orderItem.dessert.price}</td>
+                                                    <td>{orderItem.quantity}</td>
+                                                    <td>{Number(orderItem.quantity) * Number(orderItem.dessert.price)}</td>
+                                                </tr>
+                                            ))}
 
                                         </tbody>
                                     </table>
@@ -132,7 +195,7 @@ function OrderItem() {
                                                 Sub Total
                                             </div>
                                             <div class="col-lg-6 ml-auto text-right px-5">
-                                                2250
+                                                {totalCalculator(0)}
                                             </div>
                                         </tr>
                                         <tr className='row py-2'>
@@ -143,7 +206,7 @@ function OrderItem() {
                                                 Free
                                             </div>
                                         </tr>
-                                        <div class="col-lg lg-auto py-2">
+                                        <div class="col-lg lg-auto py-1">
                                             <section class="card">
                                                 <div class="card-body">
                                                     <div className='row'>
@@ -151,7 +214,7 @@ function OrderItem() {
                                                             <strong>Total</strong>
                                                         </div>
                                                         <div class="col-lg-6 ml-auto text-right">
-                                                            <strong>2250</strong>
+                                                            <strong>{totalCalculator(0)}</strong>
                                                         </div>
 
                                                     </div>
@@ -159,13 +222,10 @@ function OrderItem() {
                                                 </div>
                                             </section>
                                             <div className='px-3 py-2'>
-                                                <label for="cc-name" class="control-label mb-1">Delivery Date</label>
-                                                <input id="cc-name" name="cc-name" type="date" class="form-control cc-name valid" />
-                                            </div>
-                                            <div className='px-3 py-2'>
                                                 <label for="cc-name" class="control-label mb-1">Status</label>
-                                                <select name="select" id="select" class="form-control">
-                                                    <option value="0">Please select</option>
+
+                                                <select onChange={(e) => setStatus(e.target.value)} value={status} name="select" id="select" class="form-control">
+                                                    {/* <option value="0">Please select</option> */}
                                                     <option value="1">Pending</option>
                                                     <option value="2">Confirmed</option>
                                                     <option value="3">Dispatch</option>
@@ -187,7 +247,9 @@ function OrderItem() {
                     </div>
                 </div>
             </div >
-        </>
+        </>)
+
+
     )
 }
 

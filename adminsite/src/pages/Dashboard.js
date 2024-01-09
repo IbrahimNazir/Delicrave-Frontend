@@ -160,7 +160,7 @@ function Dashboard() {
                                         labels: ["Chocobar", "Fiest", "Kulfa", "Peshawari", "Other"],
                                         datasets: [
                                             {
-                                                label: 'Sale Today',
+                                                label: 'Month Sell',
                                                 data: [300, 100, 350, 30, 100],
                                                 backgroundColor: [
                                                     'rgba(0,255,150)',

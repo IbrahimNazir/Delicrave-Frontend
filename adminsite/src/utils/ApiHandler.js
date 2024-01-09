@@ -142,7 +142,7 @@ export const apiGetAllDessert = async () => {
 export const apiSaveDessert = async (name, price, stockquantity, unit, description, category, flavor) => {
     console.log('apiSaveFlavor', name, price, stockquantity, unit, description, category, flavor)
     try {
-        const response = await axios.post(Config.dessertsUrl, { name: name, stockquantity: stockquantity, description: description, price:price, unit:unit, category: category, flavor: flavor });
+        const response = await axios.post(Config.dessertsUrl, { name: name, stockquantity: stockquantity, description: description, price: price, unit: unit, category: category, flavor: flavor });
         // const response2 = await axios.post(Config.catalogitemsUrl, { category: category, flavor: flavor });
         return response.data;
     } catch (error) {
@@ -180,13 +180,49 @@ export const apiDeleteDessert = async (id) => {
 // 'id', 'name', 'stockquantity', 'description', 'price', 'unit', 'category', 'flavor'
 
 export const apiEditDessert = async (id, name, price, stockquantity, unit, description, category, flavor) => {
-    console.log('apiSaveFlavor',id, name, price, stockquantity, unit, description, category, flavor)
+    console.log('apiSaveFlavor', id, name, price, stockquantity, unit, description, category, flavor)
     try {
-        const response = await axios.put(  `${Config.dessertsUrl}${id}/`, { name: name, stockquantity: stockquantity, description: description, price:price, unit:unit, category: category, flavor: flavor });
+        const response = await axios.put(`${Config.dessertsUrl}${id}/`, { name: name, stockquantity: stockquantity, description: description, price: price, unit: unit, category: category, flavor: flavor });
         return response.data;
     } catch (error) {
         console.error('Error saving data:', error);
         throw error;
     }
 };
+
+
+
+// CRUD Order
+export const apiGetAllOrders = async () => {
+    try {
+        const response = await axios.get(Config.ordersUrl);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+export const apiEditOrders = async (id, date, status, totalamount, paymethod, rating, review, customer) => {
+    try {
+        console.log(id, date, status, totalamount, paymethod, rating, review, customer)
+        const response = await axios.put(`${Config.ordersUrl}${id}/`, { status:status, customer:customer });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
+
+// CRUD OrderItems
+export const apiGetAllOrderItems = async (orderId) => {
+    try {
+        const response = await axios.get(`${Config.orderItemsUrl}${orderId}/`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
 

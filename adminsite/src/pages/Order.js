@@ -1,77 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import Table from '../components/Table'
 import RightPanel from '../components/RightPanel'
+import { apiGetAllOrders } from '../utils/ApiHandler'
+import { useParams } from 'react-router-dom/cjs/react-router-dom'
 
-var init = [
-    { orderID: 10, name: 'xiri Satou', price: '9', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'sdfasfasfc 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-    { orderID: 10, name: 'xiri Satou', price: '120', address: 'S-232, Sec 71', status: '0' },
-    { orderID: 9, name: 'Zarira Chuli', price: '900', address: 'Z-232, Sec 71', status: '1' },
-    { orderID: 8, name: 'Xamosa Khan', price: '300', address: 'A-232, Sec 71', status: '3' },
-]
+
 
 
 
 function Order() {
+    
+    const init = [
+        {
+            "id": 1,
+            "date": "2024-01-06",
+            "status": "Pending",
+            "totalamount": 500.0,
+            "paymethod": "COD",
+            "rating": 5,
+            "review": "Best",
+            "customer": {
+                "id": 1,
+                "username": "Ibrahim",
+                "name": "Ibrahim Nazir",
+                "contact": "030020067",
+                "email": "ibrahim@gmail.com",
+                "address": "A-55, Sector 5"
+            }
+        }
+    ]
+    const [orders, setOrders] = useState(init)
+    // const [order, setOrder] = useState([{}])
     const [noOfEntries, setNoOfEntries] = useState('20')
     const [searchValue, setSearchValue] = useState('')
     const [pageNo, setPageNo] = useState(1)
-    const [orders, setOrders] = useState([])
+    // const [orders, setOrders] = useState([{ id: 0, customer: {}, data: "asd", paymethod: "card", rating: 0, totalamount: 0, review: "", status: "" }])
     const [n, setN] = useState(0)
 
     var pag = document.getElementsByClassName("paginate_button")
+    const fetchOrdersAsync = async () => {
+        try {
+            const result = await apiGetAllOrders();
+            console.log('response', result)
+            setOrders(result)
+            console.log("orders: ",orders.sort((a,b)=> Number(b.id)-Number(a.id)))
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     useEffect(() => {
         for (const iterator of pag) {
@@ -80,7 +56,12 @@ function Order() {
         pag[pageNo % 3 ? pageNo % 3 : 3].classList.add("active")
 
     }, [pageNo])
-    var noOfPages = Math.ceil(init.length / Number(noOfEntries))
+    var noOfPages = Math.ceil(orders.length / Number(noOfEntries))
+
+    useEffect(() => {
+        fetchOrdersAsync()
+        console.log("useEffect",orders)
+    }, [])
 
 
     return (
@@ -104,11 +85,10 @@ function Order() {
                                                             <option value="10">10</option>
                                                             <option value="20">20</option>
                                                             <option value="50">50</option>
-                                                            <option value={init.length.toString()}>All</option>
+                                                            <option value={orders.length.toString()}>All</option>
                                                         </select> entries
                                                     </label>
                                                 </div>
-
                                             </div>
                                             <div class="col-sm-12 col-md-6" style={{ textAlign: 'right', position: 'relative' }}>
                                                 <label style={{ display: 'block', float: 'right' }}>Search:
@@ -119,12 +99,15 @@ function Order() {
 
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <Table noOfEntries={noOfEntries} searchValue={searchValue} pageNo={pageNo} init={init} setOrders={setOrders} />
+                                                {console.log("here am I bef")}
+                                                <Table noOfEntries={noOfEntries} searchValue={searchValue} pageNo={pageNo} init={orders} setOrders={setOrders} />
+                                                {console.log("here am I after")}
+
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12 col-md-5">
-                                                <div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite">Showing {pageNo * noOfEntries - noOfEntries + 1} to {pageNo * noOfEntries >= init.length ? init.length : pageNo * noOfEntries} of {init.length} entries
+                                                <div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite">Showing {pageNo * noOfEntries - noOfEntries + 1} to {pageNo * noOfEntries >= orders.length ? orders.length : pageNo * noOfEntries} of {orders.length} entries
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-7">
@@ -135,26 +118,26 @@ function Order() {
                                                             <a value={pageNo} onClick={() => {
 
                                                                 setPageNo(prev => prev - 1)
-                                                                const pg = pageNo-2
+                                                                const pg = pageNo - 2
                                                                 setN(Math.floor(pg / 3))
 
 
                                                             }} class="page-link">Prev</a>
                                                         </li>
 
-                                                        {Math.ceil(init.length / Number(noOfEntries)) >= 1 ?
+                                                        {Math.ceil(orders.length / Number(noOfEntries)) >= 1 ?
                                                             <li class="paginate_button page-item">
                                                                 <a value={pageNo} onClick={() => { setPageNo(3 * n + 1) }} class="page-link">{3 * n + 1}</a>
                                                             </li>
                                                             : ""
                                                         }
-                                                        {Math.ceil(init.length / Number(noOfEntries)) >= 2 ?
+                                                        {Math.ceil(orders.length / Number(noOfEntries)) >= 2 ?
                                                             <li class="paginate_button page-item">
                                                                 <a value={pageNo} onClick={() => { setPageNo(3 * n + 2) }} class="page-link">{3 * n + 2}</a>
                                                             </li>
                                                             : ""
                                                         }
-                                                        {Math.ceil(init.length / Number(noOfEntries)) >= 3 ?
+                                                        {Math.ceil(orders.length / Number(noOfEntries)) >= 3 ?
                                                             <li class="paginate_button page-item">
                                                                 <a value={pageNo} onClick={() => { setPageNo(3 * n + 3) }} class="page-link">{3 * n + 3}</a>
                                                             </li>
@@ -164,7 +147,7 @@ function Order() {
                                                         <li class="paginate_button page-item next" id="bootstrap-data-table_next" hidden={pageNo === noOfPages}>
                                                             <a value={pageNo} onClick={() => {
                                                                 setPageNo(prev => prev + 1)
-                                                                const p = pageNo 
+                                                                const p = pageNo
                                                                 setN(Math.floor(p / 3))
                                                             }} class="page-link">Next</a>
                                                         </li>

@@ -29,7 +29,7 @@ root.render(
                 <PrivateRoute exact path='/admin/addproducts' page={AddProduct} activepage="1"/>
                 <PrivateRoute exact path='/admin/editdessert/:dessertId' page={EditDessert} activepage="1"/>
                 <PrivateRoute exact path='/admin/orders' page={Order} activepage="2"/>
-                <PrivateRoute exact path='/admin/orderdetail/:id' page={OrderItem} activepage="2"/>
+                <PrivateRoute exact path='/admin/orderdetail/:orderId' page={OrderItem} activepage="2"/>
                 <PrivateRoute exact path='/admin/categories' page={Category} activepage="3"/>
                 <PrivateRoute exact path='/admin/flavors' page={Flavor} activepage="4"/>
                 <Route component={Error404}></Route>

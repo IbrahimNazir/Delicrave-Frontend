@@ -135,7 +135,7 @@ function Category() {
                                 <div class="card-header"><strong>Edit Category {editCategoryId == "" ? "" :`# ${editCategoryId}` } </strong></div>
                                 <div class="card-body card-block">
                                     <div class="form-group"><label for="company" class=" form-control-label">Category Name</label><input type="text" id="company" placeholder="Enter category name" class="form-control" value={editCategoryName} onChange={(e) => setEditCategoryName(e.target.value)} disabled={editCategoryId === "" ? true : false} /></div>
-                                    <button type="button" class="btn btn-primary btn-block" disabled={editCategoryId === "" ? true : false} >Edit</button>
+                                    <button type="submit" class="btn btn-primary btn-block" disabled={editCategoryId === "" ? true : false} >Edit</button>
                                 </div>
                             </form>
                         </div>
