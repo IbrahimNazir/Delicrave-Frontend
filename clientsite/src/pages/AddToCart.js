@@ -3,25 +3,8 @@ import d1 from '../images/CAKE.jpg'
 import { apiGetAllDessertsByCategory } from '../utils/ApiHandler'
 
 function AddToCart() {
-    const init = []
-    const [cartItems, setCartItems] = useState(init)
-    const [customerId, setCustomerId] = useState("1")
     
-    const fetchCartItemsByCustomerIdAsync = async () => {
-        try {
-            const result = await apiGetAllCartItemsByCustomerId(customerId);
-            console.log('respo', result)
-            cartItems(result)
-            console.log("desserts", cartItems)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    useEffect(()=>{
-        fetchCartItemsByCustomerIdAsync()
-    },[])
-    return (
+    return  (
         <div className='container py-5'>
             <div className='d-flex gap-0 flex-column flex-md-row'>
                 <div className='card card-sm col col-md-8 border-primary border-end-0'>

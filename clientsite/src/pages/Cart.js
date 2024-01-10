@@ -57,7 +57,7 @@ function Cart() {
                             </div>
                             <div class="flex-item quantity">
                                 <div class="addsub">
-                                    <span>−</span>
+                                    <span>-</span>
                                     <label>1</label>
                                     <span>+</span>
                                 </div>

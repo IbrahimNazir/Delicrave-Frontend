@@ -84,11 +84,11 @@ function CatalogItem() {
 
     // const handleInput = (e) => {
     //     const { name, value } = e.target
-    //     setFilterForm({
+    //     se  tFilterForm({
     //         ...filterForm,
     //         [name]: value
-    //     })
-    // }
+    //     }) 
+    // } 
     const disable = (event) => {
         event.target.firstChild.disabled = "true"
     }
