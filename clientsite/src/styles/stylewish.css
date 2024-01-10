@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    /* background-image: url('./images/background.jpg'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: rgb(10, 5, 2);
+}
+.wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 110vh;
+}
+.nav{
+    position: absolute;
+    top: 0;
+    margin-right: 25px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    line-height: 65px;
+    z-index: 100;
+    margin-top: 1%;
+}
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nav-menu ul{
+    margin-top: 5px;
+    display: flex;
+}
+.nav-menu ul li{
+    list-style-type: none;
+}
+.nav-logo{
+    margin-top: 1.5rem;
+}
+.nav-buttons {
+    display: flex;
+    gap: 5px;
+    margin-left: 4em;
+}
+.nav-buttons .btn{
+    width: 130px;
+    height: 40px;
+    font-weight: 500;
+    font-size: 16px;
+    background: rgba(218, 54, 106, 0.8);
+    color: antiquewhite;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease;
+    margin-top: 1em;
+}
+.btn:hover{
+    background: rgba(194, 30, 82, 0.6);
+}
+#name{
+    padding: 5px;
+    color: antiquewhite;
+    font-weight: 700;
+}
+.nav-menu ul li .link{
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 17.5px;
+    color: rgba(218, 54, 106, 0.8);
+    padding-bottom: 15px;
+    margin: 0 25px;
+}
+.link{
+    position: relative;
+    cursor: pointer;
+}
+.link::before {
+    content: "";
+    display: block;
+    height: 2.5px; 
+    width: 0;
+    background-color: rgba(193, 35, 85, 0.6);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .link:hover::before {
+    width: 100%;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(193, 35, 85, 0.8);
+    min-width: 170px;
+    box-shadow: 0 8px 16px rgba(222, 12, 68, 0.295);
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 0px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(194, 30, 82, 0.6);
+    border-radius: 5px;
+}
+
+li:hover .dropdown-content {
+    display: block;
+}
+.nav-menu-btn{
+    display: none;
+}
+.nav-menu .icon i{
+    font-size: 18px;
+    color: antiquewhite;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.nav-menu .icon i:hover{
+    color: rgba(218, 54, 106, 0.8);
+}
+.wishlist .header{
+    background-color: rgba(218, 54, 106, 0.8);
+    box-shadow: 1px 5px 7px 1px rgba(222, 12, 68, 0.295);
+    color: antiquewhite;
+    border-radius: 30px;
+    width: 300px;
+    height: 50px;
+    padding: 2px 2px;
+    text-align: center;
+    margin-top: -60%;
+}
+.card-main{
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    left: 3.5%;
+    position: absolute;
+}
+.card{
+    width: 70rem;
+    height: 6.5rem;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 1px 1px 10px rgba(222, 12, 68, 0.295);
+    background-color: rgba(63, 58, 59, 0.632);
+    border-radius: 5px; 
+    margin: 2%;
+}
+.image{
+    margin-left: 6%;
+}
+.image img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    padding: 5px 5px;
+    border: 1px solid rgb(218, 32, 91);
+    margin-top: 15%;
+}
+.title{
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    padding: 10px;
+}
+.title>h1{
+    font-size: 22px;
+    color: rgb(218, 32, 91);
+}
+#dessert-name{
+    margin-left: 10px;
+}
+.title-2{
+    width: 150px;
+    position: absolute;
+    margin-top: 3.2%;
+    margin-bottom: auto;
+    margin-left: 40%;
+    text-align: center;
+}
+.title-2>h1{
+    font-size: 22px;
+    color: rgb(218, 32, 91);
+}
+#price{
+    position: absolute;
+    margin-left: 70px;
+    color: antiquewhite;
+}
+.des{
+    position: absolute;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    margin-left: 75%;
+    text-align: center;
+    color: antiquewhite;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.des>button{
+    padding:10px;
+    width: 160px;
+    font-weight: 600;
+    font-size: 16px;
+    background: rgba(206, 23, 81, 0.826);
+    border: none;
+    color: antiquewhite;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+.des>button:hover{
+    background: rgba(146, 9, 53, 0.932);
+    box-shadow: 1px 5px 7px 1px rgba(177, 8, 53, 0.409);
+}
+.des i{
+    padding: 15px;
+    font-size: 18px;
+    color: antiquewhite;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.des i:hover{
+    color: rgba(218, 54, 106, 0.8);
+}

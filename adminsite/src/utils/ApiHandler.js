@@ -226,3 +226,13 @@ export const apiGetAllOrderItems = async (orderId) => {
 };
 
 
+// CRUD Dashboard
+export const apiGetAllDashboardItems = async () => {
+    try {
+        const response = await axios.get(Config.dashboard);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};

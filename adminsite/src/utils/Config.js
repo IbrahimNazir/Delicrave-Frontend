@@ -1,4 +1,5 @@
 class Config{
+    static dashboard = "http://127.0.0.1:8000/delicrave/dashboard/"
     static customersUrl = "http://127.0.0.1:8000/delicrave/customers/"
     static categoriesUrl = "http://127.0.0.1:8000/delicrave/categories/"
     static flavorsUrl = "http://127.0.0.1:8000/delicrave/flavors/"

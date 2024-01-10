@@ -30,55 +30,19 @@ function Header({ onSidebarClick }) {
                         <div class="header-left">
 
                             <div class="dropdown for-message togg" onClick={() => {
-                                for (let index = 0; index < 2; index++) {
+                                for (let index = 0; index < 1; index++) {
                                     document.getElementsByClassName("togg")[index].classList.toggle("show")
                                 }
                             }
                             }>
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="fa fa-envelope"></i>
-                                    <span class="count bg-primary">4</span>
-                                </button>
                                 <div class="dropdown-menu togg">
-                                    <p class="red">You have 4 Mails</p>
-                                    <a class="dropdown-item media" href="#">
-                                        <span class="photo media-left"><img alt="avatar" src={f1} /></span>
-                                        <div class="message media-body">
-                                            <span class="name float-left">Jonathan Smith</span>
-                                            <span class="time float-right">Just now</span>
-                                            <p>Hello, this is an example msg</p>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item media" href="#">
-                                        <span class="photo media-left"><img alt="avatar" src={f2} /></span>
-                                        <div class="message media-body">
-                                            <span class="name float-left">Jack Sanders</span>
-                                            <span class="time float-right">5 minutes ago</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur</p>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item media" href="#">
-                                        <span class="photo media-left"><img alt="avatar" src={f3} /></span>
-                                        <div class="message media-body">
-                                            <span class="name float-left">Cheryl Wheeler</span>
-                                            <span class="time float-right">10 minutes ago</span>
-                                            <p>Hello, this is an example msg</p>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item media" href="#">
-                                        <span class="photo media-left"><img alt="avatar" src={f4} /></span>
-                                        <div class="message media-body">
-                                            <span class="name float-left">Rachel Santos</span>
-                                            <span class="time float-right">15 minutes ago</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur</p>
-                                        </div>
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <div class="user-area dropdown float-right togg" onClick={() => {
-                            for (let index = 2; index < 4; index++) {
+                            for (let index = 3; index < 4; index++) {
                                 document.getElementsByClassName("togg")[index].classList.toggle("show")
                             }
                         }
@@ -88,11 +52,6 @@ function Header({ onSidebarClick }) {
                             </a>
 
                             <div class="user-menu dropdown-menu togg">
-                                <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
-
-                                <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
-
-                                <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
 
                                 <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
                             </div>

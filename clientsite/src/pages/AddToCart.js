@@ -1,8 +1,26 @@
-import React from 'react'
-import d1 from '../images/d1.jpg'
+import React, { useEffect, useState } from 'react'
+import d1 from '../images/CAKE.jpg'
+import { apiGetAllDessertsByCategory } from '../utils/ApiHandler'
 
 function AddToCart() {
+    const init = []
+    const [cartItems, setCartItems] = useState(init)
+    const [customerId, setCustomerId] = useState("1")
+    
+    const fetchCartItemsByCustomerIdAsync = async () => {
+        try {
+            const result = await apiGetAllCartItemsByCustomerId(customerId);
+            console.log('respo', result)
+            cartItems(result)
+            console.log("desserts", cartItems)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
+    useEffect(()=>{
+        fetchCartItemsByCustomerIdAsync()
+    },[])
     return (
         <div className='container py-5'>
             <div className='d-flex gap-0 flex-column flex-md-row'>
@@ -22,7 +40,7 @@ function AddToCart() {
                             <hr />
                             <div className='row '>
                                 <div className='col col-2'>
-                                    <img src={d1} width={"120%"}/>
+                                    <img src={d1} width={"120%"} />
                                 </div>
                                 <div className='col col-3 text-sm'>
                                     <h6 style={{ color: "#be4f60", fontWeight: '800' }}>Category</h6>
@@ -44,7 +62,7 @@ function AddToCart() {
                                     </div>
                                 </div>
                                 <div className='col col-2'>
-                                    
+
                                 </div>
                                 <div className='col px-0'>
                                     <label className='px-0 py-2'>1400</label>
@@ -54,14 +72,14 @@ function AddToCart() {
                                     </div>
                                 </div>
                                 <div className='col'>
-                                    
+
                                 </div>
 
                             </div>
                             <hr />
                             <div className='row '>
                                 <div className='col col-2'>
-                                    <img src={d1} width={"120%"}/>
+                                    <img src={d1} width={"120%"} />
                                 </div>
                                 <div className='col text-sm'>
                                     <h6 style={{ color: "#be4f60", fontWeight: '800' }}>Category</h6>
@@ -97,10 +115,10 @@ function AddToCart() {
 
 
                             </div>
-                            <hr/>
+                            <hr />
                             <div className='row '>
                                 <div className='col col-2'>
-                                    <img src={d1} width={"120%"}/>
+                                    <img src={d1} width={"120%"} />
                                 </div>
                                 <div className='col text-sm'>
                                     <h6 style={{ color: "#be4f60", fontWeight: '800' }}>Category</h6>
@@ -143,20 +161,8 @@ function AddToCart() {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
+            orderItemsUrl
         </div >
-
     )
 }
 
