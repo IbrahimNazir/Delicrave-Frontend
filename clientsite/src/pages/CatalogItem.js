@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import "../styles/style.css"
 import "../styles/styleCatalog.css"
 import { apiGetAllDessertsByCategory } from '../utils/ApiHandler';
 import cake from "../images/CAKE.jpg"
@@ -19,6 +18,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import Config from '../utils/Config';
+import NavBar from './NavBar';
 
 function CatalogItem() {
     const init = []
@@ -29,6 +29,7 @@ function CatalogItem() {
         max_price: "",
 
     })
+    const [cartId, setSetCartId] = useState("")
     const fetchDessertsByCategoryAsync = async () => {
         try {
             const result = await apiGetAllDessertsByCategory(catId);
@@ -39,16 +40,7 @@ function CatalogItem() {
             console.log(error)
         }
     }
-    // const filterDessertsByPriceAsync = async () => {
-    //     try {
-    //         const result = await apiGetAllDessertsByCategory(catId);
-    //         console.log('respo', result)
-    //         setDesserts(result)
-    //         console.log("desserts", desserts)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+
 
     const sortByPrice = (order) => {
         if (order === "asc") {
@@ -82,13 +74,7 @@ function CatalogItem() {
         }
     };
 
-    // const handleInput = (e) => {
-    //     const { name, value } = e.target
-    //     se  tFilterForm({
-    //         ...filterForm,
-    //         [name]: value
-    //     }) 
-    // } 
+     
     const disable = (event) => {
         event.target.firstChild.disabled = "true"
     }
@@ -98,56 +84,43 @@ function CatalogItem() {
         console.log(catId)
         fetchDessertsByCategoryAsync();
         console.log("desserts", desserts)
-
+        apiAddDessertToCart()
     }, [catId]);
+    const apiAddDessertToCart = async (dessertId) => {
+        try {
+            const userId = localStorage.getItem("customerId")
+            const response = await axios.get(`${Config.cartitemsbycust}${userId}/`);
+            setSetCartId(response.data[0].cart.id)
+            console.log('CartID Response:', response.data[0].cart.id);
+        } catch (error) {
+            // Handle errors
+            console.error('Filter Error:', error);
+        }
+    }
+
+
+    const apiAddDessertCart = async (dessertId, cartid) => {
+        try {
+            // const userId = localStorage.getItem("customerId")
+            const response = await axios.post(`${Config.cartitemsUrl}`, { dessert:dessertId, cart:cartid});
+            console.log(response.data)
+            console.log('CartID Response:', response.data[0].cart.id);
+        } catch (error) {
+            // Handle errors
+            console.error('Filter Error:', error);
+        }
+    }
+
+
+    function addDessertToCart(dessertId){
+        const resp = apiAddDessertCart(dessertId,cartId)
+    }
 
 
     return (
         <>
             <div class="wrap">
-                <nav class="nav">
-                    <div class="nav-logo">
-                        <img src={delicrave} width="200px" alt="Delicrave logo" />
-                    </div>
-                    <div class="nav-menu" id="navMenu">
-                        <ul>
-                            <li><a href="index.html" class="link" id="homeLink">HOME</a></li>
-                            <li class="dropdown">
-                                <a href="index.html" class="link dropbtn">PRODUCTS</a>
-                                <div class="dropdown-content">
-                                    <a href="icecream.html">ICE CREAMS</a>
-                                    <a href="cake.html">CAKES</a>
-                                    <a href="cookie.html">COOKIES</a>
-                                    <a href="shake.html">MILK SHAKES</a>
-                                </div>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="link dropbtn">SERVICES</a>
-                                <div class="dropdown-content">
-                                    <a href="cart.html">VIEW CART</a>
-                                    <a href="wishlist.html">WISHLIST</a>
-                                    <a href="trackOrder.html">TRACK ORDER</a>
-                                    <a href="orderhistory.html">ORDER HISTORY</a>
-                                    <a href="index.html">CATERING</a>
-                                </div>
-                            </li>
-                            <li><a href="index.html" class="link">ABOUT</a></li>
-                            <li><a href="index.html" class="link">CONTACT</a></li>
-                        </ul>
-                        <div class="icon">
-                            <i class="fa-solid fa-heart" onclick="openPage('wishlist.html')"></i>
-                            <i class="fa-solid fa-cart-shopping" onclick="openPage('cart.html')"></i>
-                        </div>
-                        <div class="nav-buttons">
-                            <div id="name">UserName</div>
-                            <button class="btn" id="logout-btn">LOGOUT</button>
-                        </div>
-
-                    </div>
-                    <div class="nav-menu-btn">
-                        <i class="bx bx-menu" onclick="myMenuFunction()"></i>
-                    </div>
-                </nav>
+                <NavBar/>
                 <form class="search-container" onSubmit={(e)=>searchProduct(e)}>
                     {/* <!--search func create hoga--> */}
                     <input type="text" class="search" placeholder="Search Dessert" name='search'/>
@@ -180,7 +153,7 @@ function CatalogItem() {
                         {desserts.length === 0? (<h3 className='menu_card'>Could Not Find Dessert</h3>) : (desserts.map((dessert) => (
                             <div key={dessert.id} class="menu_card">
                                 <div class="menu_image">
-                                    <img src={cone} />
+                                    <img src={dessert.image} />
                                 </div>
 
                                 <div class="small_card">
@@ -190,7 +163,7 @@ function CatalogItem() {
                                 <div class="menu_info">
                                     <h2>{dessert.name}</h2>
                                     <h3>{dessert.price}</h3>
-                                    <a href="#" class="menu_btn">Add to Cart</a>
+                                    <a onClick={()=>addDessertToCart(dessert.id)} class="menu_btn">Add to Cart</a>
                                 </div>
 
                             </div>

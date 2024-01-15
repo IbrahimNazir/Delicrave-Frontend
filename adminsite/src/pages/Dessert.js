@@ -70,6 +70,7 @@ function Dessert() {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
+                                                <th scope="col">Image</th>
                                                 <th scope="col">Dessert Name</th>
                                                 <th scope="col">Category</th>
                                                 <th scope="col">Unit</th>
@@ -83,6 +84,7 @@ function Dessert() {
                                             {desserts.map((dessert, index) => (
                                                 <tr key={dessert.id}>
                                                     <th scope="row">{index + 1}</th>
+                                                    <td><img src={dessert.image} width={'50px'} height={"30px"}></img></td>
                                                     <td>{dessert.name}</td>
                                                     <td>{dessert.category.name}</td>
                                                     <td>{dessert.unit}</td>

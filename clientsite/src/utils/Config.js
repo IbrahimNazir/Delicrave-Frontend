@@ -1,13 +1,16 @@
 class Config{
     static customersUrl = "http://127.0.0.1:8000/delicrave/customers/"
+    static getuserbyusername = "http://127.0.0.1:8000/delicrave/getuserbyusername/"
+    static createcustomersUrl = "http://127.0.0.1:8000/delicrave/createcustomer/"
+    static token = "http://127.0.0.1:8000/delicrave/token/"
     static categoriesUrl = "http://127.0.0.1:8000/delicrave/categories/"
     static flavorsUrl = "http://127.0.0.1:8000/delicrave/flavors/"
     static dessertsUrl = "http://127.0.0.1:8000/delicrave/desserts/"
     static unitsUrl = "http://127.0.0.1:8000/delicrave/units/"
     static ordersUrl = "http://127.0.0.1:8000/delicrave/orders/"
-    static orderItemsUrl = "http://127.0.0.1:8000/delicrave/itemsbyorderid/"
+    static orderItemsUrl = "http://127.0.0.1:8000/delicrave/itemsbyOrder/"
     static flavorcatsUrl = "http://127.0.0.1:8000/delicrave/flavorcats/"
-    static wishlistsUrl = "http://127.0.0.1:8000/delicrave/wishlists/"
+    static wishlistsUrl = "http://127.0.0.1:8000/delicrave/wishlist/"
     static catalogitemsUrl = "http://127.0.0.1:8000/delicrave/catalogitems/"
     static customercartsUrl = "http://127.0.0.1:8000/delicrave/customercarts/"
     static cartitemsUrl = "http://127.0.0.1:8000/delicrave/cartitems/"
@@ -20,10 +23,8 @@ class Config{
     static cartitemsbycust = "http://127.0.0.1:8000/delicrave/CartItemsByCust/"
     static orderhistory = "http://127.0.0.1:8000/delicrave/OrderHistory/"
     static search = "http://127.0.0.1:8000/delicrave/search/"
-
-    
-   
-    
-    
+    static cartitemsbycustomerid = "http://127.0.0.1:8000/delicrave/CartItemsByCust/"
+    static img = "http://127.0.0.1:8000"
 }
 export default Config
+

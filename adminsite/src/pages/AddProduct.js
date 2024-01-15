@@ -6,6 +6,7 @@ function AddProduct() {
 
     const [flavors, setFlavors] = useState([])
     const [categorys, setCategorys] = useState([])
+    const [imgName, setImgName] = useState("Choose Image")
     const editDessertHistory = useHistory()
 
     const handleGoBackButtonClick = () => {
@@ -52,15 +53,17 @@ function AddProduct() {
             }
             return
         }
-        const putDessertAsync = async (name, price, stockquantity, unit, description, category, flavor, addBtn) => {
+        const putDessertAsync = async (name, price, stockquantity, unit, description, category, flavor, image, addBtn) => {
             try {
-                const result = await apiSaveDessert(name, price, stockquantity, unit, description, category, flavor);
+                const result = await apiSaveDessert(name, price, stockquantity, unit, description, category, flavor, image);
                 addBtn.classList.add("btn-success")
                 addBtn.type = "button"
                 addBtn.addEventListener('click', handleGoBackButtonClick)
                 console.log(addBtn.type)
                 event.target.addBtn.innerHTML = "Saved Changes. Go back"
                 event.target.reset()
+                setImgName("Choose Image")
+
 
             } catch (error) {
                 console.log(error)
@@ -79,6 +82,7 @@ function AddProduct() {
             event.target.description.value,
             event.target.category.value,
             event.target.flavor.value,
+            event.target.image.files[0],
             event.target.addBtn
         );
 
@@ -100,6 +104,13 @@ function AddProduct() {
     }
 
 
+    function imageNameShower(event) {
+        // let imagePath = event.files[0].split("\\")
+        // setImgName(imagePath[imagePath.lenght-1])
+        console.log("ImageName", event.target.files[0].name)
+        setImgName(event.target.files[0].name)
+    }
+
 
     return (
         <>
@@ -116,7 +127,7 @@ function AddProduct() {
                                         <select required onClick={(e) => handleInput(e)} name="category" id="category" class="form-control">
                                             <option value="0">Select category</option>
                                             {categorys.map((category) => (
-                                                <option value={category.id}>{category.name}</option>
+                                                <option key={category.id} value={category.id}>{category.name}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -125,14 +136,21 @@ function AddProduct() {
                                         <select required onClick={(e) => handleInput(e)} name="flavor" id="flavor" class="form-control">
                                             <option value="0">Select flavor</option>
                                             {flavors.map((flavor) => (
-                                                <option value={flavor.id}>{flavor.name}</option>
+                                                <option key={flavor.id} value={flavor.id}>{flavor.name}</option>
                                             ))}
                                         </select>
                                     </div>
                                     <div class="form-group"><label for="price" class=" form-control-label">Price</label><input required name='price' type="number" id="price" placeholder="Enter price" class="form-control" onChange={(e) => handleInput(e)} /></div>
                                     <div class="form-group"><label for="stockquantity" class=" form-control-label">Quantity</label><input required name='stockquantity' type="number" id="stockquantity" placeholder="Enter Quantity" class="form-control" onChange={(e) => handleInput(e)} /></div>
                                     <div class="form-group"><label for="unit" class=" form-control-label">Unit</label><input required name='unit' type="text" id="unit" placeholder="Enter unit" class="form-control" /></div>
-                                    <div class="form-group"><label for="description" class=" form-control-label">Description</label><input required type="text" id="description" placeholder="Enter your city" class="form-control" /></div>
+                                    <div class="form-group"><label for="description" class=" form-control-label">Description</label><input required type="text" id="description" placeholder="Enter Description" class="form-control" /></div>
+                                    <div class="form-group"><label for="image" class=" form-control-label">Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="image" onChange={(e) => imageNameShower(e)} />
+                                            <label class="custom-file-label" for="image">{imgName}</label>
+                                        </div>
+                                    </div>
+
                                     <button name='addBtn' id='addBtn' type="submit" class="btn btn-primary btn-block">Add</button>
                                 </div>
                             </form>

@@ -15,16 +15,36 @@ import dess from "../images/dess.png"
 import milkshake from "../images/MILKSHAKE.jpg"
 import cone from "../images/cone.jpg"
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import NavBar from './NavBar';
+import Config from '../utils/Config';
+import axios from 'axios';
+import AuthHandler from '../utils/AuthHandler';
 
 function HomePage() {
   const catalogIdHistory = useHistory()
   const [categories, setCategories] = useState([{}])
+  const [customer, setCustomer] = useState({})
+  const [loginStatus, setLoginStatus] = useState(1)
+  const [loginUser, setLoginUser] = useState("LOGIN")
+
   const fetchCategorysAsync = async () => {
     try {
       const result = await apiGetAllCategory();
-      console.log('respo', result)
+      // console.log('customer', loginUser)
       setCategories(result)
-      console.log("asd", categories)
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  const fetchCustomersAsync = async () => {
+    try {
+      console.log(`${Config.customersUrl}${window.localStorage.getItem("customerId")}/`)
+      const result = await axios.get(`${Config.customersUrl}${window.localStorage.getItem("customerId")}/`);
+      console.log('respo', result.data)
+      setCustomer("customer:", result.data)
+      console.log("name", result.data.name)
+      setLoginUser(result.data.name)
+
     } catch (error) {
       console.log(error)
     }
@@ -35,87 +55,145 @@ function HomePage() {
     fetchCategorysAsync();
   }, []);
 
+
+
+
   const goToCatalog = (categoryId) => {
     catalogIdHistory.push(`catalog/${categoryId}`)
   }
 
 
+
+  var a = document.getElementById("login-btn")
+  var b = document.getElementById("signup-btn")
+  var c = document.getElementById("home")
+  var x = document.getElementById("login")
+  var y = document.getElementById("signup")
+  var m = document.getElementById("navbar")
+  var n = document.getElementById("footer")
+
+  function login() {
+    console.log("sdsdlsnfdl")
+    x.style.left = "5px";
+    y.style.right = "-520px";
+    c.style.right = "-700px";
+    a.className += " white-btn";
+    b.className = "btn";
+    x.style.opacity = 1;
+    y.style.opacity = 0;
+    c.style.opacity = 0;
+    m.style.display = "none";
+    n.style.display = "none";
+  }
+
+  function signup() {
+    x.style.left = "-510px";
+    c.style.right = "-700px";
+    y.style.right = "6px";
+    a.className = "btn";
+    b.className += " white-btn";
+    x.style.opacity = 0;
+    y.style.opacity = 1;
+    c.style.opacity = 0;
+    m.style.display = "none";
+    n.style.display = "none";
+  }
+
+  function home() {
+    x.style.left = "500px";
+    y.style.right = "-500px";
+    c.style.right = "4px";
+    x.style.opacity = 0;
+    y.style.opacity = 0;
+    c.style.opacity = 1;
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    home();
+
+    var homeLink = document.getElementById("homeLink");
+    homeLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      home();
+    });
+  });
+
+
+  const userRegister = async (event) => {
+    event.preventDefault()
+
+    try {
+      console.log({ username: event.target.username.value, name: event.target.fname.value, contact: event.target.contact.value, email: event.target.email.value, address: event.target.address.value, password: event.target.password.value })
+      const response = await axios.post(`${Config.createcustomersUrl}`, { username: event.target.username.value, name: event.target.fname.value, contact: event.target.contact.value, email: event.target.email.value, address: event.target.address.value, password: event.target.password.value });
+      login()
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
+
+  const customerLogin = async (event) => {
+    event.preventDefault()
+    setLoginStatus(2)
+    console.log(event.target.username.value, event.target.password.value)
+    AuthHandler.login(event.target.username.value, event.target.password.value, handleAjaxResponse)
+    const resp = axios.get(`${Config.getuserbyusername}?username=${event.target.username.value}`);
+    resp.then((res) => {
+      console.log(res.data.id)
+      window.localStorage.setItem("customerId", res.data.id)
+      window.localStorage.setItem("customerName", res.data.name)
+      fetchCustomersAsync()
+
+    })
+  }
+  const handleAjaxResponse = (data) => {
+    console.log(data)
+    if (data.error) {
+      setLoginStatus(4);
+    }
+    else {
+      setLoginStatus(3);
+      window.location.reload()
+    }
+  };
+
   return (
     <>
       <div class="wrap">
-        <nav class="nav" id="navbar">
-          <div class="nav-logo">
-            <img src={delicrave} width="200px" alt="Delicrave logo" />
-          </div>
-          <div class="nav-menu" id="navMenu">
-            <ul>
-              <li><a href="#" class="link" id="homeLink">HOME</a></li>
-              <li class="dropdown">
-                <a href="#products" class="link dropbtn">PRODUCTS</a>
-                <div class="dropdown-content">
-                  {categories.map((category) => (
-                    <a onClick={() => goToCatalog(category.id)}>{category.name}</a>
-                  ))}
-                  {/* <a href="icecream.html">ICE CREAMS</a>
-                  <a href="cake.html">CAKES</a>
-                  <a href="cookie.html">COOKIES</a>
-                  <a href="shake.html">MILK SHAKES</a> */}
-                </div>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="link dropbtn">SERVICES</a>
-                <div class="dropdown-content">
-                  <a href="cart.html">VIEW CART</a>
-                  <a href="wishlist.html">WISHLIST</a>
-                  <a href="trackOrder.html">TRACK ORDER</a>
-                  <a href="orderhistory.html">ORDER HISTORY</a>
-                  <a href="#catering-services">CATERING</a>
-                </div>
-              </li>
-              <li><a href="#about-us" class="link">ABOUT</a></li>
-              <li><a href="#footer" class="link">CONTACT</a></li>
-            </ul>
-
-            <div class="nav-buttons">
-              <button class="btn white-btn" id="login-btn" onclick="login()">LOGIN</button>
-              <button class="btn" id="signup-btn" onclick="signup()">SIGNUP</button>
-            </div>
-          </div>
-          <div class="nav-menu-btn">
-            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
-          </div>
-        </nav>
+        <NavBar loginUser={loginUser} />
         {/* <!----------------------------------home page-----------------------------> */}
         <div class="home-container" id="home">
           <div class="slogan">
             <h1 class="head_slogan anim">DELIGHT<br />IN EVERY BITE!</h1>
             <p class="slogan_content anim">Satisfy your sweet cravings at Delicrave - where cakes, cookies, ice creams, and milkshakes dance together to create a symphony of indulgence in every delicious bite!</p>
             <div class="buy_btn anim">
-              <button class="btn" onclick="scrollToElement('products')">BUY NOW</button>
+              <button class="btn" onClick="scrollToElement('products')">BUY NOW</button>
             </div>
           </div>
           <img src={dessert} alt="desserts" class="dessert_img" />
 
           <div class="desserts-container" id="products">
-            <h1>Categories</h1>
+            <h1>CATEGORIES</h1>
+            
             <div class="card-main">
-              {categories.map((category,index) => (
+              {categories.map((category, index) => (
                 <div key={category.id} class="card" id={`crd-${index}`}>
                   <div class="image">
-                    <img src={cone} />
+                    <img src={category.image} />
                   </div>
                   <div class="title">
                     <h1>{category.name}</h1>
                   </div>
                   <div class="des">
                     <p>Indulge in pure bliss with our ice creams - where every scoop is a taste of happiness!</p>
-                    <button onClick={()=>goToCatalog(category.id)}>ORDER</button>
+                    <button onClick={() => goToCatalog(category.id)}>ORDER</button>
                   </div>
                 </div>
               ))}
 
 
-{/*              
+              {/*              
 
               <div class="card" id="crd-3">
                 <div class="image">
@@ -129,7 +207,7 @@ function HomePage() {
                   <button onclick="openPage('shake.html')">ORDER</button>
                 </div>
               </div> */}
-
+              {/* 
               <div class="card" id="crd-4">
                 <div class="image">
                   <img src={cookie} />
@@ -141,7 +219,7 @@ function HomePage() {
                   <p>Crunch perfection in every <br /> bite – our cookies, a flavor symphony!</p>
                   <button onclick="openPage('cookie.html')">ORDER</button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div class="contact" id="catering-services">
@@ -186,16 +264,16 @@ function HomePage() {
           {/* <!------------------Login form---------------------------> */}
           <div class="login-container" id="login">
             <div class="top">
-              <span>Don't have an account? <a href="#" onclick="signup()">SignUp</a></span>
+              <span>Don't have an account? <a href="#" onClick={() => signup()}>SignUp</a></span>
               <header>Login</header>
             </div>
-            <form id="log-form">
+            <form id="log-form" onSubmit={(e) => customerLogin(e)}>
               <div class="input-box">
-                <input type="text" class="input-field" placeholder="Username or Email" required />
+                <input type="text" class="input-field" placeholder="Username" name='username' required />
                 <i class="bx bx-user"></i>
               </div>
               <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password" required />
+                <input type="password" class="input-field" placeholder="Password" name='password' required />
                 <i class="bx bx-lock-alt"></i>
               </div>
               <div class="input-box">
@@ -216,42 +294,44 @@ function HomePage() {
           {/* <!------------------Signup form---------------------------> */}
           <div class="signup-container" id="signup">
             <div class="top">
-              <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+              <span>Have an account? <a href="#" onClick={login}>Login</a></span>
               <header>Registration</header>
             </div>
-            <form id="reg-form">
+            <form id="reg-form" onSubmit={(e) => userRegister(e)}>
               <div class="two-forms">
                 <div class="input-box inputControl" >
-                  <input type="text" class="input-field" id="firstname" placeholder="Firstname" />
+                  <input type="text" class="input-field" id="firstname" placeholder="Full Name" name='fname' />
                   <i class="bx bx-user"></i>
                   <div class="error"></div>
                 </div>
                 <div class="input-box inputControl">
-                  <input type="text" class="input-field" id="lastname" placeholder="Lastname" />
+                  <input type="text" class="input-field" id="lastname" placeholder="Username" name='username' />
                   <i class="bx bx-user"></i>
                   <div class="error"></div>
                 </div>
               </div>
               <div class="two-forms">
                 <div class="input-box inputControl">
-                  <input type="text" class="input-field" id="gender" placeholder="Gender" />
+                  <input type="number" class="input-field" id="contact" placeholder="Contact" name='contact' />
                   <i class="bx bx-user"></i>
                   <div class="error"></div>
                 </div>
-                <div class="input-box inputControl">
-                  <input type="number" class="input-field" id="age" placeholder="Age" />
-                  <i class="bx bx-user"></i>
-                  <div class="error"></div>
-                </div>
+
               </div>
               <div class="input-box inputControl">
-                <input type="text" class="input-field" id="email" placeholder="Email Address" />
+                <input type="text" class="input-field" id="email" placeholder="Email Address" name='email' />
                 <i class="bx bx-envelope"></i>
                 <div class="error"></div>
               </div>
+
               <div class="input-box inputControl">
-                <input type="password" class="input-field" id="password" placeholder="Password" />
+                <input type="password" class="input-field" id="password" placeholder="Password" name='password' />
                 <i class="bx bx-lock-alt"></i>
+                <div class="error"></div>
+              </div>
+              <div class="input-box inputControl">
+                <input type="text" class="input-field" id="address" placeholder="Address" name='address' />
+                <i class="bx bx-envelope"></i>
                 <div class="error"></div>
               </div>
               <div class="input-box">

@@ -1,12 +1,12 @@
 class Config{
-    static dashboard = "http://127.0.0.1:8000/delicrave/dashboard/"
+    static dashboard = "http://127.0.0.1:8000/delicrave/custom_statistics/"
     static customersUrl = "http://127.0.0.1:8000/delicrave/customers/"
     static categoriesUrl = "http://127.0.0.1:8000/delicrave/categories/"
     static flavorsUrl = "http://127.0.0.1:8000/delicrave/flavors/"
     static dessertsUrl = "http://127.0.0.1:8000/delicrave/desserts/"
     static unitsUrl = "http://127.0.0.1:8000/delicrave/units/"
     static ordersUrl = "http://127.0.0.1:8000/delicrave/orders/"
-    static orderItemsUrl = "http://127.0.0.1:8000/delicrave/itemsbyorderid/"
+    static orderItemsUrl = "http://127.0.0.1:8000/delicrave/itemsbyOrder/"
     static flavorcatsUrl = "http://127.0.0.1:8000/delicrave/flavorcats/"
     static wishlistsUrl = "http://127.0.0.1:8000/delicrave/wishlists/"
     static catalogitemsUrl = "http://127.0.0.1:8000/delicrave/catalogitems/"
@@ -24,4 +24,5 @@ class Config{
         {index:4, title:"Flavors", url:"/admin/flavors", icon:"fa-eye-dropper"},
     ]
 }
+
 export default Config

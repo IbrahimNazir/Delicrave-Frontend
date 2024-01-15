@@ -240,8 +240,17 @@ li:hover .dropdown-content {
     border-radius: 5px; 
     margin: 2%;
    }
-.crd{
+#crd-1{
     animation: slide-in 0.1s linear forwards;
+}
+#crd-2{
+    animation: slide-in 0.5s linear forwards;
+}
+#crd-3{
+    animation: slide-in 0.9s linear forwards;
+}
+#crd-4{
+    animation: slide-in 1.3s linear forwards;
 }
 .image img{
     width: 180px;

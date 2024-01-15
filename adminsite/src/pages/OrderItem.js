@@ -6,7 +6,7 @@ import Error404 from './Error404';
 function OrderItem() {
 
     const { orderId } = useParams();
-    const [status, setStatus] = useState("1")
+    const [status, setStatus] = useState("")
     const [orderItems, setorderItems] = useState([{
         "id": 1,
         "dessert": {
@@ -50,10 +50,11 @@ function OrderItem() {
         try {
             console.log("param:", orderId)
             const result = await apiGetAllOrderItems(orderId);
-            console.log('respo', result.length)
+            console.log('respo', result)
 
             setorderItems(result)
-            setStatus(statuss[orderItems[0].order.status])
+            setStatus(statuss[result[0].order.status])
+            console.log(statuss[result[0].order.status])
         } catch (error) {
             console.log(error)
         }
@@ -81,13 +82,10 @@ function OrderItem() {
     } 
 
 
-
     return (
         (orderItems.length == 0) ? (<Redirect to="/" />) : (<>
             <div class="content">
                 <div class="animated fadeIn">
-
-
                     <div class="row">
 
                         <div class="col-lg">
@@ -110,7 +108,7 @@ function OrderItem() {
                                                 <strong>Order Date:</strong>
                                             </div>
                                             <div class="col-lg-7">
-                                                {orderItems[0].order.date}
+                                                {new Date(orderItems[0].order.date).toLocaleDateString()}
                                             </div>
                                         </div>
                                     </div>
@@ -174,6 +172,7 @@ function OrderItem() {
                                         <tbody>
                                             {orderItems.map((orderItem, index) => (
                                                 <tr key={index}>
+                                                    
                                                     <th scope="row">{index + 1}</th>
                                                     <td>{orderItem.dessert.name}</td>
                                                     <td>{orderItem.dessert.flavor.name}</td>
@@ -182,6 +181,7 @@ function OrderItem() {
                                                     <td>{orderItem.dessert.price}</td>
                                                     <td>{orderItem.quantity}</td>
                                                     <td>{Number(orderItem.quantity) * Number(orderItem.dessert.price)}</td>
+                                                    
                                                 </tr>
                                             ))}
 

@@ -13,6 +13,9 @@ import AddToCart from './pages/AddToCart';
 import HomePage from './pages/HomePage';
 import CatalogItem from './pages/CatalogItem';
 import Cart from './pages/Cart';
+import WishList from './pages/WishList';
+import TrackOrder from './pages/TrackOrder';
+import OrderHistory from './pages/OrderHistory';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -23,6 +26,10 @@ root.render(
       <Route exact path="/delicrave/addtocart" component={AddToCart} />
       <Route exact path="/delicrave/catalog/:catId" component={CatalogItem} />
       <Route exact path="/delicrave/cart/:customerId" component={Cart} />
+      <Route exact path="/delicrave/wishlist/:customerId" component={WishList} />
+      <Route exact path="/delicrave/trackorder/:customerId" component={TrackOrder} />
+      <Route exact path="/delicrave/orderhistory/:customerId" component={OrderHistory} />
+
       <Route component={Error404} />
     </Switch>
   </Router >

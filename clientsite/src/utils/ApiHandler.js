@@ -242,8 +242,51 @@ export const apiGetAllCartItemsByCustomerId = async (customerId) => {
 
     try {
         console.log(`${Config.cartitemsbycustomerid}${customerId}/`)
-        let query = `min_price=${min_price}&`
+        
         const response = await axios.get(`${Config.cartitemsbycustomerid}${customerId}/`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+//wishlist
+export const apiGetAllWishlistItemsByCustomerId = async (customerId) => {
+
+    try {
+        console.log(`${Config.wishlist}${customerId}/`)
+        
+        const response = await axios.get(`${Config.wishlistsUrl}${customerId}/`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
+
+
+
+
+//wishlist
+export const apiGetAllOrderTrackItemsByCustomerId = async (customerId) => {
+
+    try {
+        console.log(`${Config.wishlist}${customerId}/`)
+        
+        const response = await axios.get(`${Config.wishlistsUrl}${customerId}/`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+//OrderHistory
+export const apiGetAllOrderHistoryItemsByCustomerId = async (customerId) => {
+
+    try {
+        console.log(`${Config.orderhistory}${customerId}/`)
+        const response = await axios.get(`${Config.orderhistory}${customerId}/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);

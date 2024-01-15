@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import cake from "../images/CAKE.jpg"
 import cater1 from "../images/cater-1.jpg"
 import cater2 from "../images/cater-2.jpg"
@@ -13,11 +13,47 @@ import dess from "../images/dess.png"
 import milkshake from "../images/MILKSHAKE.jpg"
 import cone from "../images/cone.jpg"
 import "../styles/stylecart.css"
+import { apiGetAllCartItemsByCustomerId } from '../utils/ApiHandler'
+import Config from '../utils/Config'
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min'
+import AuthHandler from '../utils/AuthHandler'
 
 function Cart() {
-    const init = []
+    const init = [{
+        "id": "",
+        "dessert": {
+            "id": "",
+            "name": "",
+            "price": "",
+            "stockquantity": "",
+            "description": "",
+            "category": {
+                "id": "",
+                "name": "",
+                "image": ""
+            },
+            "flavor": {
+                "id": "",
+                "name": ""
+            },
+            "unit": "",
+            "image": ""
+        },
+        "cart": {
+            "id": "",
+            "customer": {
+                "id": "",
+                "username": "",
+                "name": "",
+                "contact": "",
+                "email": "",
+                "address": ""
+            }
+        },
+        "quantity": 2
+    },]
     const [cartItems, setCartItems] = useState(init)
-    const [customerId, setCustomerId] = useState("1")
+    const [customerId, setCustomerId] = useState(localStorage.getItem("customerId"))
 
     const fetchCartItemsByCustomerIdAsync = async () => {
         try {
@@ -34,256 +70,82 @@ function Cart() {
         fetchCartItemsByCustomerIdAsync()
     }, [])
     return (
-        <>
-            <div class="cart">
-                <h1 class="header">MY CART</h1>
-                <div class="item-body">
-                    {cartItems.map((cartItem) => (
-                        <div class="flex-container">
-                            <div class="image">
-                                <img src="./images/CAKE.jpg" alt="Dessert" width="100px" />
+
+        (!AuthHandler.loggedIn()) ?
+
+            (<Redirect to="/delicrave/home" />) :
+            (
+                <>
+                    <div className='wrapper'>
+                        <div class="cart">
+                            <h1 class="header">MY CART</h1>
+                            <div class="item-body">
+                                {cartItems.length === 0 ? (<h2 style={{color:"white",textAlign:"center"}}>Empty</h2>) : (cartItems.map((cartItem) => (
+                                    <div class="flex-container">
+                                        <div class="image">
+                                            <img src={`${Config.img}${cartItem.dessert.image}`} alt="Dessert" width="100px" />
+                                        </div>
+                                        <div class="flex-item product">
+                                            <strong>{cartItem.dessert.category.name}</strong>
+                                            <p>{cartItem.dessert.name}</p>
+                                        </div>
+                                        <div class="flex-item styled-select unit">
+                                            <label style={{ color: 'white' }}>{cartItem.dessert.unit}</label>
+                                        </div>
+                                        <div class="flex-item quantity">
+                                            <div class="addsub">
+                                                <span>-</span>
+                                                <label>1</label>
+                                                <span>+</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-item price">
+                                            <div>
+                                                <span>{cartItem.dessert.price}</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-item delete">
+                                            <div>
+                                                <i class="fa-solid fa-trash"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                )))}
                             </div>
-                            <div class="flex-item product">
-                                <strong>{cartItem.category.name}</strong>
-                                <p>Vanilla  and candy</p>
-                            </div>
-                            <div class="flex-item styled-select unit">
-                                <select name="unit" id="unit">
-                                    <option value="1">Cup</option>
-                                    <option value="2">Cone</option>
-                                    <option value="3">1 pond</option>
-                                    <option value="4">1 litre</option>
-                                </select>
-                            </div>
-                            <div class="flex-item quantity">
-                                <div class="addsub">
-                                    <span>-</span>
-                                    <label>1</label>
-                                    <span>+</span>
+                            <div class="flex-item box">
+                                <div class="item-body">
+                                    <div class="item-header row">
+                                        <h2>ORDER SUMMARY</h2>
+                                    </div>
+                                    <div class="item-body-body">
+                                        <hr />
+                                        <div class="item-header row">
+                                            <span>Subtotal</span>
+                                            <label>123.34</label>
+                                        </div>
+                                        <div class="item-header row">
+                                            <span><strong>Shipping
+                                                Fee</strong></span>
+                                            <label>123.34</label>
+                                        </div>
+                                        <div class="item-header row">
+                                            <span><strong>Total</strong></span>
+                                            <label><strong>Rs
+                                                12323</strong></label>
+                                        </div>
+                                        <div class="row">
+                                            <a class="sharp-button" onclick="openPage('confirmOrder.html')">Proceed
+                                                to
+                                                checkout</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex-item price">
-                                <div>
-                                    <span>Rs.1234</span>
-                                </div>
-                            </div>
-                            <div class="flex-item delete">
-                                <div>
-                                    <i class="fa-solid fa-trash"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                    ))}
-
-                    <div class="flex-container">
-                        <div class="image">
-                            <img src="./images/COOKIE.jpg" alt="Dessert" width="100px" />
-                        </div>
-                        <div class="flex-item product">
-                            <strong>COOKIES</strong>
-                            <p>Chocolate chip Crunch Cookies</p>
-                        </div>
-                        <div class="flex-item styled-select unit">
-                            <select name="unit" id="unit">
-                                <option value="1">Cup</option>
-                                <option value="2">Cone</option>
-                                <option value="3">1 pond</option>
-                                <option value="4">1 litre</option>
-                            </select>
-                        </div>
-                        <div class="flex-item quantity">
-                            <div class="addsub">
-                                <span>−</span>
-                                <label>1</label>
-                                <span>+</span>
-                            </div>
-                        </div>
-                        <div class="flex-item price">
-                            <div>
-                                <span>Rs.1234</span>
-                            </div>
-                        </div>
-                        <div class="flex-item delete">
-                            <div>
-                                <i class="fa-solid fa-trash"></i>
-                            </div>
                         </div>
                     </div>
-
-                    <div class="flex-container">
-                        <div class="image">
-                            <img src="./images/CAKE.jpg" alt="Dessert" width="100px" />
-                        </div>
-                        <div class="flex-item product">
-                            <strong>CAKE</strong>
-                            <p>Vanilla cake with sprinkles and candy</p>
-                        </div>
-                        <div class="flex-item styled-select unit">
-                            <select name="unit" id="unit">
-                                <option value="1">Cup</option>
-                                <option value="2">Cone</option>
-                                <option value="3">1 pond</option>
-                                <option value="4">1 litre</option>
-                            </select>
-                        </div>
-                        <div class="flex-item quantity">
-                            <div class="addsub">
-                                <span>−</span>
-                                <label>1</label>
-                                <span>+</span>
-                            </div>
-                        </div>
-                        <div class="flex-item price">
-                            <div>
-                                <span>Rs.1234</span>
-                            </div>
-                        </div>
-                        <div class="flex-item delete">
-                            <div>
-                                <i class="fa-solid fa-trash"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex-container">
-                        <div class="image">
-                            <img src="./images/CAKE.jpg" alt="Dessert" width="100px" />
-                        </div>
-                        <div class="flex-item product">
-                            <strong>CAKE</strong>
-                            <p>Vanilla cake with sprinkles and candy</p>
-                        </div>
-                        <div class="flex-item styled-select unit">
-                            <select name="unit" id="unit">
-                                <option value="1">Cup</option>
-                                <option value="2">Cone</option>
-                                <option value="3">1 pond</option>
-                                <option value="4">1 litre</option>
-                            </select>
-                        </div>
-                        <div class="flex-item quantity">
-                            <div class="addsub">
-                                <span>−</span>
-                                <label>1</label>
-                                <span>+</span>
-                            </div>
-                        </div>
-                        <div class="flex-item price">
-                            <div>
-                                <span>Rs.1234</span>
-                            </div>
-                        </div>
-                        <div class="flex-item delete">
-                            <div>
-                                <i class="fa-solid fa-trash"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex-container">
-                        <div class="image">
-                            <img src="./images/CAKE.jpg" alt="Dessert" width="100px" />
-                        </div>
-                        <div class="flex-item product">
-                            <strong>CAKE</strong>
-                            <p>Vanilla cake with sprinkles and candy</p>
-                        </div>
-                        <div class="flex-item styled-select unit">
-                            <select name="unit" id="unit">
-                                <option value="1">Cup</option>
-                                <option value="2">Cone</option>
-                                <option value="3">1 pond</option>
-                                <option value="4">1 litre</option>
-                            </select>
-                        </div>
-                        <div class="flex-item quantity">
-                            <div class="addsub">
-                                <span>−</span>
-                                <label>1</label>
-                                <span>+</span>
-                            </div>
-                        </div>
-                        <div class="flex-item price">
-                            <div>
-                                <span>Rs.1234</span>
-                            </div>
-                        </div>
-                        <div class="flex-item delete">
-                            <div>
-                                <i class="fa-solid fa-trash"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex-container">
-                        <div class="image">
-                            <img src="./images/CAKE.jpg" alt="Dessert" width="100px" />
-                        </div>
-                        <div class="flex-item product">
-                            <strong>CAKE</strong>
-                            <p>Vanilla cake with sprinkles and candy</p>
-                        </div>
-                        <div class="flex-item styled-select unit">
-                            <select name="unit" id="unit">
-                                <option value="1">Cup</option>
-                                <option value="2">Cone</option>
-                                <option value="3">1 pond</option>
-                                <option value="4">1 litre</option>
-                            </select>
-                        </div>
-                        <div class="flex-item quantity">
-                            <div class="addsub">
-                                <span>−</span>
-                                <label>1</label>
-                                <span>+</span>
-                            </div>
-                        </div>
-                        <div class="flex-item price">
-                            <div>
-                                <span>Rs.1234</span>
-                            </div>
-                        </div>
-                        <div class="flex-item delete">
-                            <div>
-                                <i class="fa-solid fa-trash"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex-item box">
-                    <div class="item-body">
-                        <div class="item-header row">
-                            <h2>ORDER SUMMARY</h2>
-                        </div>
-                        <div class="item-body-body">
-                            <hr />
-                            <div class="item-header row">
-                                <span>Subtotal</span>
-                                <label>123.34</label>
-                            </div>
-                            <div class="item-header row">
-                                <span><strong>Shipping
-                                    Fee</strong></span>
-                                <label>123.34</label>
-                            </div>
-                            <div class="item-header row">
-                                <span><strong>Total</strong></span>
-                                <label><strong>Rs
-                                    12323</strong></label>
-                            </div>
-                            <div class="row">
-                                <a class="sharp-button" onclick="openPage('confirmOrder.html')">Proceed
-                                    to
-                                    checkout</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+                </>
+            ))
 }
 
 export default Cart

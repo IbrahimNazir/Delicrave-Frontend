@@ -15,14 +15,13 @@ function Table({ noOfEntries, searchValue, pageNo, init, setOrders }) {
     const [orderDetail, setOrderDetail] = useState(init)
 
     useEffect(() => {
-        console.log("init", init[0].id)
+        // console.log("init", init[0].id)
         var initialState = init.filter((order, index) => { return index < ((noOfEntries === '-1') ? (pageNo * index + 1) : pageNo * Number(noOfEntries)) && (((pageNo - 1) * Number(noOfEntries)) <= index) && ((order.id.toString().toLowerCase().includes(searchValue.toLowerCase())) || (order.customer.name.toLowerCase().includes(searchValue.toLowerCase())) || (order.totalamount.toString().toLowerCase().includes(searchValue.toLowerCase())) || (order.customer.address.toLowerCase().includes(searchValue.toLowerCase())) || (order.status.toLowerCase().includes(searchValue.toLowerCase()))) })
         setOrderDetail(initialState)
     }, [noOfEntries, searchValue, pageNo, init])
 
     useEffect(() => {
         setOrders(orderDetail)
-
     }, [])
     const [order, setOrder] = useState("ASC")
     const [col, setCol] = useState("name")
@@ -140,7 +139,7 @@ function Table({ noOfEntries, searchValue, pageNo, init, setOrders }) {
                                 <td className='sorting_1'>{order.id}</td>
                                 <td>{order.customer.name}</td>
                                 <td>{order.customer.address}</td>
-                                <td>{order.date}</td>
+                                <td>{new Date(order.date).toLocaleDateString()}</td>
                                 <td>{order.totalamount}</td>
                                 <td>
                                     {/* <select name="select" id="select" class="form-control" style={{ color: "white", backgroundColor: statusColor[order.status], fontWeight: "800" }} value={order.status}
